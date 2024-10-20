@@ -13,28 +13,15 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-//            Image(systemName: "globe")
-//                .resizable()
-//                .aspectRatio(contentMode: .fit)
-//                .frame(width: 200, height: 200)
-//                .padding()
-//                .background(.yellow)
-//                .foregroundStyle(.tint)
-//                .clipShape(Jigsaw())
-//            Jigsaw(width: 370, height: 370)
-
             PuzzlePiece()
                 .trim(from: 0, to: endAmount)
                 .stroke(Color.blue, lineWidth: 4)
-                .frame(width: 300, height: 300)
+                .frame(width: 200, height: 200)
                 .onAppear {
                     withAnimation(Animation.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
                         self.endAmount = 1
                     }
                 }
-
-
-            Text("Hello, world!")
 
             Image(systemName: "globe")
                 .resizable()
@@ -43,12 +30,19 @@ struct ContentView: View {
                 .padding()
                 .background(.green)
                 .clipShape(PuzzlePiece())
+
+            PuzzlePiece()
+                .fill(.green)
+                .frame(width: 200, height: 200)
+                .overlay {
+                    Grid()
+                        .stroke(Color.black, lineWidth: 1)
+                        .frame(width: 200, height: 200)
+                }
         }
         .padding()
     }
 }
-
-
 
 #Preview {
     ContentView()

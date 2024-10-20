@@ -23,48 +23,6 @@ struct PuzzlePiece: Shape {
     }
 }
 
-struct Jigsaw: View {
-    @State private var drawGrid = true
-    let width: CGFloat
-    let height: CGFloat
-
-    var body: some View {
-        let scale = CGAffineTransform(scaleX: width, y: height)
-        Path { path in
-            path.move(to: PiecePoint.startingPoint.applying(scale))
-            PiecePoint.piecePoints.forEach { point in
-                path.addCurve(
-                    to: point.vertex.applying(scale),
-                    control1: point.control1.applying(scale),
-                    control2: point.control2.applying(scale)
-                )
-            }
-        }
-        .fill(.green)
-        .overlay {
-            if drawGrid {
-                Path { path in
-                    for y in stride(from: 0, to: width+1, by: width / 16) {
-                        path.move(to: CGPoint(x: 0, y: y))
-                        path.addLine(to: CGPoint(x: width, y: y))
-                    }
-                    for x in stride(from: 0, to: height+1, by: height / 16) {
-                        path.move(to: CGPoint(x: x, y: 0))
-                        path.addLine(to: CGPoint(x: x, y: height))
-                    }
-                }
-                .stroke(.black)
-            }
-        }
-    }
-}
-
-#Preview {
-        Jigsaw(width: 100, height: 100)
-            .frame(width: 100, height: 100, alignment: .center)
-            .background(Color.yellow)
-}
-
 struct PiecePoint {
     var vertex: CGPoint
     var control1: CGPoint
